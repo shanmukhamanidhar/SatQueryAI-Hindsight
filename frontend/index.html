@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%232563eb' stroke='%233b82f6' stroke-width='4'/><ellipse cx='50' cy='50' rx='42' ry='16' fill='none' stroke='%2322c55e' stroke-width='3' transform='rotate(-25 50 50)'/><circle cx='50' cy='50' r='12' fill='%23ffffff'/></svg>" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SatQueryAI — Earth Observation Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet" />
+    <script>
+      (function() {
+        var savedTheme = localStorage.getItem('satquery-theme');
+        if (savedTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      })();
+    </script>
+  </head>
+  <body class="bg-white dark:bg-[#09090b] text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden font-sans transition-colors duration-200">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,30 @@
+# Environment and API keys
+.env
+.env.*
+!.env.example
+*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+env/
+.venv/
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node / Frontend
+node_modules/
+dist/
+frontend/dist/
+.npm/
+
+# Cache / Logs / Temporary
+*.log
+scratch/
+.DS_Store
+Thumbs.db
+*.tmp

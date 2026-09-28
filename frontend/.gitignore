@@ -1,0 +1,20 @@
+# Environment files
+.env
+.env.local
+.env.*.local
+*.local
+
+# Dependencies
+node_modules/
+
+# Production builds
+dist/
+dist-ssr/
+
+# Editor/OS
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

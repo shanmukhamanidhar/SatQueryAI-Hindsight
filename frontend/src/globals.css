@@ -1,0 +1,450 @@
+@import 'maplibre-gl/dist/maplibre-gl.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-base: #ffffff;
+    --text-base: #0f172a;
+    --text-muted: #64748b;
+    --border-base: #e2e8f0;
+    --card-base: #ffffff;
+
+    --brand-primary: #2563eb;
+    --brand-success: #16a34a;
+    --brand-warning: #ea580c;
+    --brand-danger: #dc2626;
+  }
+
+  .dark {
+    --bg-base: #09090b;
+    --text-base: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-base: #27272a;
+    --card-base: #121215;
+
+    --brand-primary: #3b82f6;
+    --brand-success: #22c55e;
+    --brand-warning: #f97316;
+    --brand-danger: #ef4444;
+  }
+
+  body {
+    background-color: var(--bg-base);
+    color: var(--text-base);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+}
+
+/* Light Studio Precision Grid (Default) */
+.studio-grid {
+  background-color: #ffffff;
+  background-image: 
+    linear-gradient(rgba(203, 213, 225, 0.25) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(203, 213, 225, 0.25) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.dark .studio-grid {
+  background-color: #09090b;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Clean Elevated Surface Cards */
+.card-clean {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 4px 12px -2px rgba(0, 0, 0, 0.03);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dark .card-clean {
+  background-color: #121215;
+  border: 1px solid #27272a;
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.7);
+}
+
+.card-clean-hover:hover {
+  border-color: #93c5fd;
+  box-shadow: 0 12px 28px -6px rgba(37, 99, 235, 0.12);
+  transform: translateY(-2px);
+}
+
+.dark .card-clean-hover:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.9);
+  transform: translateY(-2px);
+}
+
+/* Modern Earth Sphere Representation */
+@keyframes spin-earth {
+  0% { background-position: 0 0; }
+  100% { background-position: 1280px 0; }
+}
+
+@keyframes spin-clouds {
+  0% { background-position: 0 0; }
+  100% { background-position: 1024px 0; }
+}
+
+.earth-sphere-realistic {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: 0 20px 50px -10px rgba(37, 99, 235, 0.25);
+  transform: rotate(12deg);
+}
+
+.dark .earth-sphere-realistic {
+  box-shadow: 0 20px 60px -10px rgba(0, 0, 0, 0.9), 0 0 40px rgba(37, 99, 235, 0.2);
+}
+
+.earth-surface {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-image: 
+    url('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_atmos_2048.jpg'),
+    radial-gradient(circle at 40% 40%, #2563eb 0%, #1e3a8a 60%, #0f172a 100%);
+  background-size: 1280px 100%;
+  background-repeat: repeat-x;
+  animation: spin-earth 60s linear infinite;
+}
+
+.earth-clouds {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background-image: url('https://raw.githubusercontent.com/mrdoob/three.js/master/examples/textures/planets/earth_clouds_1024.png');
+  background-size: 1024px 100%;
+  background-repeat: repeat-x;
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  animation: spin-clouds 45s linear infinite;
+}
+
+.earth-atmosphere-shadow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 32%, transparent 35%, rgba(15, 23, 42, 0.65) 75%, rgba(15, 23, 42, 0.95) 100%);
+  pointer-events: none;
+}
+
+.earth-rim-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: inset -10px -10px 40px rgba(37, 99, 235, 0.45);
+  pointer-events: none;
+}
+
+/* Custom Clean Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: 9999px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(37, 99, 235, 0.6);
+}
+
+/* Satellite Map On-Map Indicator Pins — Clean, Aligned, Professional */
+.satquery-map-indicator {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  cursor: pointer;
+  z-index: 20;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), z-index 0.2s;
+  pointer-events: auto;
+}
+
+.satquery-map-indicator:hover,
+.satquery-map-indicator.active {
+  transform: translateY(-2px) scale(1.08);
+  z-index: 60;
+}
+
+.indicator-capsule {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px 4px 6px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1.5px solid var(--indicator-color, #2563eb);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15), 0 0 12px var(--indicator-glow, rgba(37, 99, 235, 0.25));
+  backdrop-filter: blur(12px);
+  color: #0f172a;
+  font-family: 'Inter', system-ui, sans-serif;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  white-space: nowrap;
+}
+
+.dark .indicator-capsule {
+  background: rgba(18, 18, 21, 0.94);
+  color: #ffffff;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.7), 0 0 16px var(--indicator-glow, rgba(37, 99, 235, 0.35));
+}
+
+.indicator-capsule-severity {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8.5px;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 1px 5px;
+  border-radius: 4px;
+  line-height: 1.2;
+}
+
+.indicator-capsule-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--indicator-color, #2563eb);
+  box-shadow: 0 0 6px var(--indicator-color, #2563eb);
+  shrink: 0;
+}
+
+.indicator-capsule-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: #0f172a;
+}
+
+.dark .indicator-capsule-label {
+  color: #f8fafc;
+}
+
+.indicator-capsule-ha {
+  font-size: 9.5px;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-weight: 600;
+  color: #64748b;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.dark .indicator-capsule-ha {
+  color: #cbd5e1;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Subtle, refined pulse ring only on active or selected indicator */
+.satquery-map-indicator.active .indicator-capsule {
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.8), 0 0 20px var(--indicator-color, #2563eb);
+  transform: scale(1.05);
+}
+
+.dark .satquery-map-indicator.active .indicator-capsule {
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.8), 0 0 24px var(--indicator-color, #2563eb);
+}
+
+/* Refined, Organized Area & Place Badges */
+.satquery-area-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(203, 213, 225, 0.85);
+  color: #0f172a;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.dark .satquery-area-badge {
+  background: rgba(15, 23, 42, 0.88);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+}
+
+.satquery-area-badge:hover {
+  transform: translateY(-1px) scale(1.02);
+  border-color: #2563eb;
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.2);
+}
+
+.dark .satquery-area-badge:hover {
+  border-color: #38bdf8;
+  box-shadow: 0 4px 16px rgba(56, 189, 248, 0.3);
+}
+
+.satquery-badge-name {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #0f172a !important;
+  line-height: 1.2;
+}
+
+.dark .satquery-badge-name {
+  color: #ffffff !important;
+}
+
+.satquery-badge-ha {
+  font-size: 9px;
+  font-weight: 600;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  padding: 1px 5px;
+  border-radius: 4px;
+  color: #0284c7;
+  background: rgba(2, 132, 199, 0.1);
+  border: 1px solid rgba(2, 132, 199, 0.25);
+}
+
+.dark .satquery-badge-ha {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.satquery-badge-dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2563eb;
+  box-shadow: 0 0 6px rgba(37, 99, 235, 0.5);
+}
+
+.dark .satquery-badge-dot {
+  background: #38bdf8;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.6);
+}
+
+/* Secondary Place Badges: Minimalist, clean, spaced micro-capsules */
+.satquery-place-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2.5px 8px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(203, 213, 225, 0.75);
+  color: #1e293b;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(8px);
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+  font-family: 'Inter', system-ui, sans-serif;
+  pointer-events: auto;
+}
+
+.dark .satquery-place-badge {
+  background: rgba(15, 23, 42, 0.85);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #f1f5f9;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.45);
+}
+
+.satquery-place-badge:hover {
+  transform: translateY(-1px) scale(1.03);
+  border-color: #3b82f6;
+  background: rgba(255, 255, 255, 0.98);
+}
+
+.dark .satquery-place-badge:hover {
+  border-color: #38bdf8;
+  background: rgba(15, 23, 42, 0.95);
+}
+
+.satquery-place-name {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  color: #1e293b !important;
+  line-height: 1.2;
+}
+
+.dark .satquery-place-name {
+  color: #f1f5f9 !important;
+}
+
+.satquery-place-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* MapLibre Controls Clean Styling */
+.maplibregl-ctrl-group {
+  border-radius: 12px !important;
+  border: 1px solid #e2e8f0 !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
+  overflow: hidden;
+}
+
+.dark .maplibregl-ctrl-group {
+  border: 1px solid #27272a !important;
+  background: rgba(18, 18, 21, 0.95) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7) !important;
+}
+
+.maplibregl-ctrl-group button {
+  width: 32px !important;
+  height: 32px !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+}
+
+.dark .maplibregl-ctrl-group button {
+  border-bottom: 1px solid #27272a !important;
+}
+
+.maplibregl-ctrl-group button:last-child {
+  border-bottom: none !important;
+}
+
+/* Ensure MapLibre map and canvas are always strictly LTR regardless of document RTL direction */
+.maplibregl-map,
+.maplibregl-canvas-container,
+.maplibregl-canvas,
+.maplibregl-ctrl-top-left,
+.maplibregl-ctrl-top-right,
+.maplibregl-ctrl-bottom-left,
+.maplibregl-ctrl-bottom-right {
+  direction: ltr !important;
+}
